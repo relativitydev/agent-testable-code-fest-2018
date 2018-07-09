@@ -34,14 +34,15 @@ namespace SampleRelativityAgent
 			int expectedArtifactID;
 
 			//create field . Comment this
-			/*
+
 			expectedArtifactID = ArtifactQueries.CreateFixedLengthTextField(WorkspaceArtifactId, SvcManager, CurrentUserIdentity);
 
 			if (expectedArtifactID == 0)
 			{
-				throw new Exception("Field failed to create field");
+				throw new Exception($"Field failed to create field");
+				//throw new Exception($"Field failed to create field on workspace {WorkspaceArtifactId}");
 			}
-				  */
+
 			//Uncomment this 
 
 			//------------------------------------------------------
@@ -52,15 +53,15 @@ namespace SampleRelativityAgent
 
 
 
-			int newWorkspaceArtifactId = 1017101;
+			//int newWorkspaceArtifactId = 1017097;
 
-			_fieldArtifactId = ArtifactQueries.GetFieldArtifactId("Demo Document Field", AgentHelper.GetDBContext(newWorkspaceArtifactId));
-			if (_fieldArtifactId == 0)
-			{
-				Console.WriteLine("Field is already present in the database :)");
-			}
+			//_fieldArtifactId = ArtifactQueries.GetFieldArtifactId("Demo Document Field", AgentHelper.GetDBContext(newWorkspaceArtifactId));
+			//if (_fieldArtifactId == 0)
+			//{
+			//	Console.WriteLine("Field is already present in the database :)");
+			//}
 
-			expectedArtifactID = ArtifactQueries.CreateFixedLengthTextField(newWorkspaceArtifactId, SvcManager, CurrentUserIdentity);
+			//expectedArtifactID = ArtifactQueries.CreateFixedLengthTextField(newWorkspaceArtifactId, SvcManager, CurrentUserIdentity);
 
 			//Uncomment this 
 

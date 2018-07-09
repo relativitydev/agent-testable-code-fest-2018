@@ -36,6 +36,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DbContextHelper, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RelativityDev.DbContextHelper.2.0.0.1\lib\DbContextHelper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="kCura.Config">
       <HintPath>..\..\..\Relativity Agent1\AgentNunitIntegrationTest\bin\Debug\kCura.Config.dll</HintPath>
     </Reference>
@@ -78,7 +82,7 @@
       <HintPath>C:\Program Files\kCura Corporation\Relativity SDK\Services API\Client\Relativity.Services.ServiceProxy.dll</HintPath>
     </Reference>
     <Reference Include="Relativity.Test.Helpers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RelativityTestHelpersNuget.1.1.0\lib\Relativity.Test.Helpers.dll</HintPath>
+      <HintPath>..\packages\RelativityTestHelpersNuget.4.1.0\lib\Relativity.Test.Helpers.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
