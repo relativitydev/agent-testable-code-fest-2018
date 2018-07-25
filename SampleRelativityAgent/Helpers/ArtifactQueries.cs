@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using kCura.Relativity.Client;
+using kCura.Relativity.Client.DTOs;
 using Relativity.API;
-using Relativity.Test.Helpers.Interface;
 
 namespace SampleRelativityAgent.Helpers
 {
-   public class ArtifactQueries : IArtifactQueries
+    public class ArtifactQueries : IArtifactQueries
     {
         public int CreateFixedLengthTextField(int workspaceId, Relativity.API.IServicesMgr svcMgr, ExecutionIdentity identity)
         {
@@ -68,20 +65,48 @@ namespace SampleRelativityAgent.Helpers
                 throw new Exception("Failed in the create field method.");
             }
         }
-        public int GetFieldArtifactId(string fieldName, IDBContext workspaceDbContext)
-        {
-            const string sqlQuery = @"SELECT [ArtifactID] FROM [EDDSDBO].[Field] WHERE [DisplayName] LIKE '%@fieldName%'";
-            var sqlParams = new List<SqlParameter> { new SqlParameter("@fieldName", SqlDbType.NVarChar) { Value = fieldName } };
 
-            return workspaceDbContext.ExecuteSqlStatementAsScalar<int>(sqlQuery, sqlParams);
+        public int GetFieldArtifactId(string fieldName, int workspaceId, IServicesMgr svcMgr, ExecutionIdentity identity)
+        {
+            try
+            {
+                using (IRSAPIClient client = svcMgr.CreateProxy<IRSAPIClient>(identity))
+                {
+                    client.APIOptions.WorkspaceID = workspaceId;
+
+                    Query<kCura.Relativity.Client.DTOs.Field> query = new Query<kCura.Relativity.Client.DTOs.Field>();
+                    query.Fields = FieldValue.AllFields;
+                    query.Condition = new TextCondition("Name", TextConditionEnum.Like, fieldName);
+
+                    ResultSet<kCura.Relativity.Client.DTOs.Field> results = client.Repositories.Field.Query(query);
+                    kCura.Relativity.Client.DTOs.Field fieldArtifact = results.Results.FirstOrDefault().Artifact;
+                    return fieldArtifact.ArtifactID;
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception($"Failed to get the artifact id for {fieldName}.");
+            }
         }
 
-        public int GetFieldCount(IDBContext workspaceDbContext, int fieldArtifactId)
+        public int GetFieldCount(int fieldArtifactId, int workspaceId, IServicesMgr svcMgr, ExecutionIdentity identity)
         {
-            const string sqlQuery = @"select count(*) from [EDDSDBO].[ExtendedField] where ArtifactID = @fieldArtifactId";
-            var sqlParams = new List<SqlParameter> { new SqlParameter("@fieldArtifactId", SqlDbType.NVarChar) { Value = fieldArtifactId } };
+            try
+            {
+                using (IRSAPIClient client = svcMgr.CreateProxy<IRSAPIClient>(identity))
+                {
+                    client.APIOptions.WorkspaceID = workspaceId;
 
-            return workspaceDbContext.ExecuteSqlStatementAsScalar<int>(sqlQuery, sqlParams);
+                    Query query = new Query();
+                    query.Condition = new WholeNumberCondition("Artifact ID", NumericConditionEnum.EqualTo, fieldArtifactId);
+                    QueryResult result = client.Query(client.APIOptions, query);
+                    return result.TotalCount;
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception($"Failed to get the field count for artifact id {fieldArtifactId}.");
+            }
         }
     }
 }

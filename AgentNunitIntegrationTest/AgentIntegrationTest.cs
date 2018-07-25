@@ -52,20 +52,25 @@ namespace AgentNunitIntegrationTest
 
 		#endregion
 
+		#region TestTeardown
+		[TearDown]
+		public void Execute_Teardown()
+		{
+			DeleteField(NewFieldName, _workspaceId, _client);
+		}
+		#endregion
+
 		#region Golden Flow
 
 		[Test, Description("Golden Flow Unit Test")]
 		public void Integration_Test_Golden_Flow_Valid()
 		{
 			//Arrange and Act
-			var field = GetField(NewFieldName, _workspaceId, _client);
-
-			//Get the field Count of the field.
-			//int fieldCount = Relativity.Test.Helpers.ArtifactHelpers.Fields.GetFieldCount(WorkspaceDbConext, fieldArtifactId);
+			QueryResult fieldQueryResult = GetField(NewFieldName, _workspaceId, _client);
 
 			//Assert
-			Assert.AreEqual(field.TotalCount, 1, "Count is not 1");
-			Assert.IsNotNull(field.QueryArtifacts[0].ArtifactID, "ArtifactID should not be null");
+			Assert.AreEqual(1, fieldQueryResult.TotalCount, "Count is not 1");
+			Assert.IsNotNull(fieldQueryResult.QueryArtifacts[0].ArtifactID, "ArtifactID should not be null");
 		}
 
 		#endregion
@@ -74,11 +79,10 @@ namespace AgentNunitIntegrationTest
 
 		public static QueryResult GetField(string fieldname, int workspaceID, IRSAPIClient _client)
 		{
-			var query = new Query
-			{
-				ArtifactTypeID = (int)ArtifactType.Field,
-				Condition = new TextCondition("Name", TextConditionEnum.Like, fieldname)
-			};
+			_client.APIOptions.WorkspaceID = workspaceID;
+			
+			Query query = new Query();
+			query.Condition = new TextCondition("Name", TextConditionEnum.Like, fieldname);
 			QueryResult result = null;
 
 			try
@@ -87,10 +91,24 @@ namespace AgentNunitIntegrationTest
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine("An error occurred: {0}", ex.Message);
+				Console.WriteLine($"An error occurred getting field {fieldname}: {ex.Message}");
 			}
 
 			return result;
+		}
+
+		public static void DeleteField(string fieldname, int workspaceID, IRSAPIClient _client)
+		{
+			_client.APIOptions.WorkspaceID = workspaceID;
+			QueryResult result = GetField(fieldname, workspaceID, _client);
+			try
+			{
+				_client.Repositories.Field.DeleteSingle(result.QueryArtifacts[0].ArtifactID);
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"An error occurred deleting field {fieldname}: {ex.Message}");
+			}
 		}
 
 		#endregion

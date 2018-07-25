@@ -57,11 +57,11 @@ namespace AgentUnitTests
         public void AgentTest1()
         {
             //Arrange
-            MockArtifactQueries.Setup(x => x.CreateFixedLengthTextField(It.IsAny<int>(), MockServiceMgr.Object,
-                ExecutionIdentity.System)).Returns(4534543);
+            MockArtifactQueries.Setup(x => x.CreateFixedLengthTextField(It.IsAny<int>(),
+                MockServiceMgr.Object, ExecutionIdentity.System)).Returns(4534543);
 
-            MockArtifactQueries.Setup(x => x.GetFieldArtifactId(It.IsAny<string>(),
-                MockworkspaceDbContext.Object)).Returns(423656);
+            MockArtifactQueries.Setup(x => x.GetFieldArtifactId(It.IsAny<string>(), It.IsAny<int>(),
+                MockServiceMgr.Object, ExecutionIdentity.System)).Returns(423656);
 
             //Act
             Sut.Execute();
