@@ -15,7 +15,7 @@ namespace SampleRelativityAgent
 		public override void Execute()
 		{
 			//Set up
-			SampleRelativityAgent.Helpers.IArtifactQueries artifactQueries = new SampleRelativityAgent.Helpers.ArtifactQueries();
+			Helpers.IArtifactQueries artifactQueries = new Helpers.ArtifactQueries();
 			_logger = Helper.GetLoggerFactory().GetLogger();
 			SvcManager = Helper.GetServicesManager();
 			IdentityCurrentUser = ExecutionIdentity.CurrentUser;

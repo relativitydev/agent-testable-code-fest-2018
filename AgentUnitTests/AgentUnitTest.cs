@@ -33,7 +33,7 @@ namespace AgentUnitTests
             MockServiceMgr = new Mock<IServicesMgr>();
             MockAgentHelper = new Mock<IAgentHelper>();
             MockworkspaceDbContext = new Mock<IDBContext>();
-            Sut = new SampleRelativityAgent.RelativityTestAgentJob(MockArtifactQueries.Object, MockLogger.Object, MockServiceMgr.Object, ExecutionIdentity.System, WorkspaceId, MockAgentHelper.Object);
+            Sut = new RelativityTestAgentJob(MockArtifactQueries.Object, MockLogger.Object, MockServiceMgr.Object, ExecutionIdentity.System, WorkspaceId, MockAgentHelper.Object);
         }
 
         #endregion
