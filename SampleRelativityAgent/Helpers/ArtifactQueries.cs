@@ -8,7 +8,7 @@ namespace SampleRelativityAgent.Helpers
 {
     public class ArtifactQueries : IArtifactQueries
     {
-        public int CreateFixedLengthTextField(int workspaceId, Relativity.API.IServicesMgr svcMgr, ExecutionIdentity identity)
+        public int CreateFixedLengthTextField(int workspaceId, IServicesMgr svcMgr, ExecutionIdentity identity)
         {
             var fieldId = 0;
 
