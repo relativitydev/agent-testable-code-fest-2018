@@ -82,7 +82,7 @@ namespace AgentNunitIntegrationTest
 
 		#endregion
 
-		#region privte helpers
+		#region private helpers
 
 		private ResultSet<kCura.Relativity.Client.DTOs.Field> GetField(string fieldname, int workspaceID, IRSAPIClient _client)
 		{
