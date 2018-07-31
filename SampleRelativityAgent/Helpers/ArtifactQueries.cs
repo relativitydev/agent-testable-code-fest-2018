@@ -68,6 +68,7 @@ namespace SampleRelativityAgent.Helpers
 
         public int GetFieldArtifactId(string fieldName, int workspaceId, IServicesMgr svcMgr, ExecutionIdentity identity)
         {
+            int artifactId;
             try
             {
                 using (IRSAPIClient client = svcMgr.CreateProxy<IRSAPIClient>(identity))
@@ -80,13 +81,15 @@ namespace SampleRelativityAgent.Helpers
 
                     ResultSet<kCura.Relativity.Client.DTOs.Field> results = client.Repositories.Field.Query(query);
                     kCura.Relativity.Client.DTOs.Field fieldArtifact = results.Results.FirstOrDefault().Artifact;
-                    return fieldArtifact.ArtifactID;
+                    artifactId = fieldArtifact.ArtifactID;
                 }
             }
             catch (Exception)
             {
-                throw new Exception($"Failed to get the artifact id for {fieldName}.");
+                //Instead of throwing an exception we want to set the artifactId = 0
+                artifactId = 0;
             }
+            return artifactId;
         }
 
         public int GetFieldCount(int fieldArtifactId, int workspaceId, IServicesMgr svcMgr, ExecutionIdentity identity)
