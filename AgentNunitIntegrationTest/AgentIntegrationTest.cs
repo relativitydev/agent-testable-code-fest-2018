@@ -31,7 +31,7 @@ namespace AgentNunitIntegrationTest
 			_workspaceId = 1017097;
 
 			//Create instance of Test Helper & set up services manager and db context
-			var helper = new TestHelper();
+			TestHelper helper = new TestHelper();
 			ServicesManager = helper.GetServicesManager();
 			WorkspaceDbConext = helper.GetDBContext(_workspaceId);
 

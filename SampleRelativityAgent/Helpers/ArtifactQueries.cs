@@ -10,7 +10,7 @@ namespace SampleRelativityAgent.Helpers
     {
         public int CreateFixedLengthTextField(int workspaceId, IServicesMgr svcMgr, ExecutionIdentity identity)
         {
-            var fieldId = 0;
+            int fieldId = 0;
 
             try
             {
@@ -45,7 +45,7 @@ namespace SampleRelativityAgent.Helpers
                     fieldDto.IsRelational = false;
 
                     //Create the field
-                    kCura.Relativity.Client.DTOs.WriteResultSet<kCura.Relativity.Client.DTOs.Field> resultSet = client.Repositories.Field.Create(fieldDto);
+                    WriteResultSet<kCura.Relativity.Client.DTOs.Field> resultSet = client.Repositories.Field.Create(fieldDto);
 
                     //Check for success
                     if (!resultSet.Success)
@@ -54,7 +54,7 @@ namespace SampleRelativityAgent.Helpers
                         return fieldId;
                     }
 
-                    var firstOrDefault = resultSet.Results.FirstOrDefault();
+                    Result<kCura.Relativity.Client.DTOs.Field> firstOrDefault = resultSet.Results.FirstOrDefault();
                     if (firstOrDefault != null) fieldId = firstOrDefault.Artifact.ArtifactID;
 
                     return fieldId;
