@@ -30,7 +30,7 @@ namespace SampleRelativityAgent
 			{
 				//Your Agent caught an exception
 				RaiseMessage(ex.Message, 0);
-				RaiseError(ex.Message, ex.Message);
+				RaiseError(ex.Message, ex.StackTrace);
 			}
 		}
 
