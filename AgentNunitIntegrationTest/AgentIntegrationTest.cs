@@ -3,6 +3,7 @@ using NUnit.Framework;
 using Relativity.API;
 using Relativity.Test.Helpers;
 using Relativity.Test.Helpers.ServiceFactory.Extentions;
+using Relativity.Test.Helpers.WorkspaceHelpers;
 using System;
 using System.Configuration;
 
@@ -19,6 +20,9 @@ namespace AgentNunitIntegrationTest
 		public IServicesMgr ServicesManager;
 		public IDBContext EddsDbContext;
 		public const string NewFieldName = "Demo Document Field";
+		public string _workspaceName = string.Concat(ConfigurationManager.AppSettings["TestWorkspaceName"], Guid.NewGuid()).Substring(0,32);
+		public string _adminUsername = ConfigurationManager.AppSettings["AdminUsername"];
+		public string _adminPassword = ConfigurationManager.AppSettings["AdminPassword"];
 
 		#endregion
 
@@ -27,7 +31,7 @@ namespace AgentNunitIntegrationTest
 		[TestFixtureSetUp]
 		public void Execute_TestFixtureSetup()
 		{
-			//_workspaceId = CreateWorkspace.CreateWorkspaceAsync(_workspaceName, ConfigurationHelper.TEST_WORKSPACE_TEMPLATE_NAME, servicesManager, ConfigurationHelper.ADMIN_USERNAME, ConfigurationHelper.DEFAULT_PASSWORD).Result;
+			//_workspaceId = CreateWorkspace.CreateWorkspaceAsync(_workspaceName, ConfigurationManager.AppSettings["TestWorkspaceTemplateName"], ServicesManager, _adminUsername, _adminPassword).Result;
 			_workspaceId = 1017097;
 
 			//Create instance of Test Helper & set up services manager and db context
@@ -36,7 +40,7 @@ namespace AgentNunitIntegrationTest
 			WorkspaceDbConext = helper.GetDBContext(_workspaceId);
 
 			//Create client
-			_client = helper.GetServicesManager().GetProxy<IRSAPIClient>(ConfigurationManager.AppSettings["AdminUsername"], ConfigurationManager.AppSettings["AdminPassword"]);
+			_client = helper.GetServicesManager().GetProxy<IRSAPIClient>(_adminUsername, _adminPassword);
 		}
 
 		#endregion
@@ -47,7 +51,7 @@ namespace AgentNunitIntegrationTest
 		public void Execute_TestFixtureTeardown()
 		{
 			//Delete Workspace
-			//DeleteWorkspace.DeleteTestWorkspace(_workspaceId, ServicesManager, ConfigurationManager.AppSettings["AdminUsername"], ConfigurationManager.AppSettings["AdminPassword"]);
+			//DeleteWorkspace.DeleteTestWorkspace(_workspaceId, ServicesManager, _adminUsername, _adminPassword);
 		}
 
 		#endregion
