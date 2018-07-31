@@ -49,7 +49,6 @@ namespace AgentNunitIntegrationTest
 		[TestFixtureTearDown]
 		public void Execute_TestFixtureTeardown()
 		{
-			//Delete Workspace
 			//DeleteWorkspace.DeleteTestWorkspace(_workspaceId, ServicesManager, _adminUsername, _adminPassword);
 		}
 
