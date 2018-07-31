@@ -40,15 +40,6 @@
       <HintPath>..\packages\RelativityDev.DbContextHelper.2.0.0.1\lib\DbContextHelper.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="kCura.Config">
-      <HintPath>..\..\..\Relativity Agent1\AgentNunitIntegrationTest\bin\Debug\kCura.Config.dll</HintPath>
-    </Reference>
-    <Reference Include="kCura.Crypto">
-      <HintPath>..\..\..\Relativity Agent1\AgentNunitIntegrationTest\bin\Debug\kCura.Crypto.dll</HintPath>
-    </Reference>
-    <Reference Include="kCura.Data.RowDataGateway">
-      <HintPath>.\kCura.Data.RowDataGateway.dll</HintPath>
-    </Reference>
     <Reference Include="kCura.Relativity.Client, Version=9.5.292.12, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\kCura Corporation\Relativity SDK\Services API\Client\kCura.Relativity.Client.dll</HintPath>
