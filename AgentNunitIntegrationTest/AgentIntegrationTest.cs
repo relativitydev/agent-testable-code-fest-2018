@@ -34,12 +34,12 @@ namespace AgentNunitIntegrationTest
 			//_workspaceId = CreateWorkspace.CreateWorkspaceAsync(_workspaceName, ConfigurationManager.AppSettings["TestWorkspaceTemplateName"], ServicesManager, _adminUsername, _adminPassword).Result;
 			_workspaceId = 1017097;
 
-			//Create instance of Test Helper & set up services manager and db context
+			//Create instance of Test Helper & set up services manager
 			TestHelper helper = new TestHelper();
 			ServicesManager = helper.GetServicesManager();
 
 			//Create client
-			_client = helper.GetServicesManager().GetProxy<IRSAPIClient>(_adminUsername, _adminPassword);
+			_client = ServicesManager.GetProxy<IRSAPIClient>(_adminUsername, _adminPassword);
 		}
 
 		#endregion
